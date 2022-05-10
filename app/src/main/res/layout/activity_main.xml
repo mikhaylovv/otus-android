@@ -1,18 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:rowCount="2"
+        android:columnCount="2">
+
+        <LinearLayout android:orientation="vertical"
+            android:padding="10dp">
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="150dp"
+                android:src="@drawable/film_1"/>
+
+            <TextView
+                android:id="@+id/film_1_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="@string/film_1_name" />
+            
+            <Button
+                android:id="@+id/film_1_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/details"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="vertical"
+            android:padding="10dp">
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="150dp"
+                android:src="@drawable/film_2"/>
+
+            <TextView
+                android:id="@+id/film_2_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="@string/film_2_name" />
+
+            <Button
+                android:id="@+id/film_2_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/details"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="vertical"
+            android:padding="10dp">
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="150dp"
+                android:src="@drawable/film_3"/>
+
+            <TextView
+                android:id="@+id/film_3_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="@string/film_3_name" />
+
+            <Button
+                android:id="@+id/film_3_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/details"/>
+        </LinearLayout>
+
+        <LinearLayout android:orientation="vertical"
+            android:padding="10dp">
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="150dp"
+                android:src="@drawable/film_4"/>
+
+            <TextView
+                android:id="@+id/film_4_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="@string/film_4_name" />
+
+            <Button
+                android:id="@+id/film_4_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/details"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/share_with_friend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/share_with_friends"/>
+    </GridLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

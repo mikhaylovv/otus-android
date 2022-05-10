@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Viktor Mikhaylov App</string>
+    <string name="first_film_name">First film name</string>
+    <string name="cat_cup">cat cup</string>
+    <string name="film_1_name">Film 1</string>
+    <string name="film_2_name">Film 2</string>
+    <string name="film_3_name">Film 3</string>
+    <string name="film_4_name">Film 4</string>
+    <string name="details">details</string>
+    <string name="share_with_friends">Share with friends</string>
 </resources>
