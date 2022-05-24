@@ -6,6 +6,10 @@
     <string name="film_2_name">Film 2</string>
     <string name="film_3_name">Film 3</string>
     <string name="film_4_name">Film 4</string>
+    <string name="film_1_desc">Film 1 description</string>
+    <string name="film_2_desc">Film 2 description</string>
+    <string name="film_3_desc">Film 3 description</string>
+    <string name="film_4_desc">Film 4 description</string>
     <string name="details">details</string>
     <string name="share_with_friends">Share with friends</string>
 </resources>
