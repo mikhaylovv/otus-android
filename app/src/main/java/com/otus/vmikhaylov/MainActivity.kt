@@ -108,10 +108,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val data = Intent()
-        data.putExtra("films", ArrayList(films))
-        setResult(RESULT_OK, data)
-
-        super.onBackPressed()
+        ExitDialog{ super.onBackPressed() }.show(supportFragmentManager, "exit_dialog")
     }
 }
