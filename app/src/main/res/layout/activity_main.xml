@@ -15,5 +15,12 @@
         tools:itemCount="5"
         tools:listitem="@layout/item_film"/>
 
+    <Button
+        android:id="@+id/share_with_friend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/share_with_friends"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

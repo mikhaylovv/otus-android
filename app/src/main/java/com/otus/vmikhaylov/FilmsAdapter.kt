@@ -37,7 +37,7 @@ class FilmsAdapter(
     }
 
     interface FilmClickListener {
-        fun onNewsClick(film: Film, position: Int)
+        fun onDetailsClick(film: Film, position: Int)
         fun onFavoriteClick(film: Film, position: Int)
     }
 }

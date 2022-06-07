@@ -29,6 +29,19 @@ class MainActivity : AppCompatActivity() {
             Film(R.drawable.film_3, getString(R.string.film_3_name), getString(R.string.film_3_desc)),
             Film(R.drawable.film_4, getString(R.string.film_4_name), getString(R.string.film_4_desc)),
         )
+
+        findViewById<Button>(R.id.share_with_friend).setOnClickListener{
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT,
+                    "Lets go to to the cinema")
+                type = "text/plain"
+            }
+
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
+        }
+
         initRecycler()
     }
 
@@ -54,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         recyclerView.layoutManager = layoutManager
         recyclerView.adapter = FilmsAdapter(films, object : FilmsAdapter.FilmClickListener {
-            override fun onNewsClick(film: Film, position: Int) {
+            override fun onDetailsClick(film: Film, position: Int) {
                 val view = recyclerView.getChildAt(position)
                 view.findViewById<TextView>(R.id.title).setTextColor(getColor(R.color.purple_200))
 
