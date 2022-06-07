@@ -1,24 +1,27 @@
 package com.otus.vmikhaylov
 
 import android.content.Intent
+import android.content.res.Configuration
+import android.content.res.Configuration.ORIENTATION_LANDSCAPE
+import android.graphics.drawable.GradientDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.otus.vmikhaylov.favorites.FavoritesActivity
-import com.otus.vmikhaylov.favorites.FavoritesFilmsAdapter
 
 class MainActivity : AppCompatActivity() {
     private val recyclerView by lazy { findViewById<RecyclerView>(R.id.recycler) }
 
     var films = mutableListOf<Film>()
-    var favourites = mutableListOf<Film>()
+    var favorites = mutableListOf<Film>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +46,19 @@ class MainActivity : AppCompatActivity() {
             startActivity(shareIntent)
         }
 
+        val startFavoritesActivity = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            val data = result.data
+            if (result.resultCode == RESULT_OK && data != null) {
+                favorites = data.getParcelableArrayListExtra("films") ?: favorites
+            }
+        }
+
         findViewById<Button>(R.id.favorites).setOnClickListener {
             val intent = Intent(this@MainActivity, FavoritesActivity::class.java)
-            intent.putExtra("films", ArrayList(favourites))
-            startActivity(intent)
+            intent.putExtra("films", ArrayList(favorites))
+            startFavoritesActivity.launch(intent)
         }
 
         initRecycler()
@@ -65,8 +77,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecycler() {
-        val layoutManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = layoutManager
+        recyclerView.layoutManager = GridLayoutManager(this, resources.configuration.orientation)
         recyclerView.adapter = FilmsAdapter(films, object : FilmsAdapter.FilmClickListener {
             override fun onDetailsClick(film: Film, position: Int) {
                 val view = recyclerView.getChildAt(position)
@@ -83,7 +94,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFavoriteClick(film: Film, position: Int) {
-                favourites.add(film)
+                if (!favorites.contains(film)){
+                    favorites.add(film)
+                }
                 Toast.makeText(this@MainActivity, "Favorite Click", Toast.LENGTH_SHORT).show()
             }
         })
@@ -92,5 +105,13 @@ class MainActivity : AppCompatActivity() {
         ResourcesCompat.getDrawable(resources, R.drawable.black_line_5dp, theme)
             ?.let { divider.setDrawable(it) }
         recyclerView.addItemDecoration(divider)
+    }
+
+    override fun onBackPressed() {
+        val data = Intent()
+        data.putExtra("films", ArrayList(films))
+        setResult(RESULT_OK, data)
+
+        super.onBackPressed()
     }
 }

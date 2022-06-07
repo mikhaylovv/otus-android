@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.otus.vmikhaylov.Details
@@ -23,8 +24,7 @@ class FavoritesActivity : AppCompatActivity() {
 
         films = intent.getParcelableArrayListExtra<Film>("films") ?: mutableListOf<Film>()
 
-        val layoutManager = LinearLayoutManager(this)
-        recyclerView.layoutManager = layoutManager
+        recyclerView.layoutManager = GridLayoutManager(this, resources.configuration.orientation)
         recyclerView.adapter = FavoritesFilmsAdapter(films, object : FavoritesFilmsAdapter.FavoriteFilmClickListener {
             override fun onDetailsClick(film: Film, position: Int) {
                 val intent = Intent(this@FavoritesActivity, Details::class.java)
@@ -34,7 +34,8 @@ class FavoritesActivity : AppCompatActivity() {
             }
 
             override fun onDeleteFavoriteClick(film: Film, position: Int) {
-                // todo: delete obj
+                films.removeAt(position)
+                recyclerView.adapter?.notifyItemRemoved(position)
             }
         })
 
@@ -42,5 +43,13 @@ class FavoritesActivity : AppCompatActivity() {
         ResourcesCompat.getDrawable(resources, R.drawable.black_line_5dp, theme)
             ?.let { divider.setDrawable(it) }
         recyclerView.addItemDecoration(divider)
+    }
+
+    override fun onBackPressed() {
+        val data = Intent()
+        data.putExtra("films", ArrayList(films))
+        setResult(RESULT_OK, data)
+
+        super.onBackPressed()
     }
 }
