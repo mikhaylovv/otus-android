@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="details">Детали</string>
-    <string name="share_with_friends">Поделиться с друзьями</string>
+    <string name="details">детали</string>
+    <string name="share_with_friends">поделиться с друзьями</string>
+    <string name="favourites">избранное</string>
+    <string name="delete">удалить</string>
 </resources>

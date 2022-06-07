@@ -1,33 +1,34 @@
 package com.otus.vmikhaylov
 
 import android.content.Intent
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.otus.vmikhaylov.favorites.FavoritesActivity
+import com.otus.vmikhaylov.favorites.FavoritesFilmsAdapter
 
 class MainActivity : AppCompatActivity() {
-    var selectedFilms = BooleanArray(4) {false}
-
     private val recyclerView by lazy { findViewById<RecyclerView>(R.id.recycler) }
 
     var films = mutableListOf<Film>()
+    var favourites = mutableListOf<Film>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         films = mutableListOf(
-            Film(R.drawable.film_1, getString(R.string.film_1_name), getString(R.string.film_1_desc)),
-            Film(R.drawable.film_2, getString(R.string.film_2_name), getString(R.string.film_2_desc)),
-            Film(R.drawable.film_3, getString(R.string.film_3_name), getString(R.string.film_3_desc)),
-            Film(R.drawable.film_4, getString(R.string.film_4_name), getString(R.string.film_4_desc)),
+            Film(R.drawable.film_1, getString(R.string.film_1_name), getString(R.string.film_1_desc), false),
+            Film(R.drawable.film_2, getString(R.string.film_2_name), getString(R.string.film_2_desc), false),
+            Film(R.drawable.film_3, getString(R.string.film_3_name), getString(R.string.film_3_desc), false),
+            Film(R.drawable.film_4, getString(R.string.film_4_name), getString(R.string.film_4_desc), false),
         )
 
         findViewById<Button>(R.id.share_with_friend).setOnClickListener{
@@ -42,25 +43,25 @@ class MainActivity : AppCompatActivity() {
             startActivity(shareIntent)
         }
 
+        findViewById<Button>(R.id.favorites).setOnClickListener {
+            val intent = Intent(this@MainActivity, FavoritesActivity::class.java)
+            intent.putExtra("films", ArrayList(favourites))
+            startActivity(intent)
+        }
+
         initRecycler()
     }
 
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putBooleanArray("selected_film_name_id", selectedFilms)
+        outState.putParcelableArrayList("films", ArrayList(films))
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        selectedFilms = savedInstanceState.getBooleanArray("selected_film_name_id") ?: BooleanArray(4) {false}
-//
-//        val films = listOf(R.id.film_1_name, R.id.film_2_name, R.id.film_3_name, R.id.film_4_name)
-//        repeat(4) { i ->
-//            if (selectedFilms[i]) {
-//                findViewById<TextView>(films[i]).setTextColor(getColor(R.color.purple_200))
-//            }
-//        }
+        val bundleFilms = savedInstanceState.getParcelableArrayList<Film>("selected_films") ?: return
+        films = bundleFilms
     }
 
     private fun initRecycler() {
@@ -76,10 +77,13 @@ class MainActivity : AppCompatActivity() {
                 intent.putExtra("description", film.description)
                 startActivity(intent)
 
+                films[position].selected = true
+
                 Toast.makeText(this@MainActivity, "News Click", Toast.LENGTH_SHORT).show()
             }
 
             override fun onFavoriteClick(film: Film, position: Int) {
+                favourites.add(film)
                 Toast.makeText(this@MainActivity, "Favorite Click", Toast.LENGTH_SHORT).show()
             }
         })

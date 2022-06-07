@@ -1,14 +1,16 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Viktor Mikhaylov App</string>
-    <string name="film_1_name">Film 1</string>
-    <string name="film_2_name">Film 2</string>
-    <string name="film_3_name">Film 3</string>
-    <string name="film_4_name">Film 4</string>
-    <string name="film_1_desc">Film 1 description</string>
-    <string name="film_2_desc">Film 2 description</string>
-    <string name="film_3_desc">Film 3 description</string>
-    <string name="film_4_desc">Film 4 description</string>
+    <string name="app_name" translatable="false">Viktor Mikhaylov App</string>
+    <string name="film_1_name" translatable="false">Film 1</string>
+    <string name="film_2_name" translatable="false">Film 2</string>
+    <string name="film_3_name" translatable="false">Film 3</string>
+    <string name="film_4_name" translatable="false">Film 4</string>
+    <string name="film_1_desc" translatable="false">Film 1 description</string>
+    <string name="film_2_desc" translatable="false">Film 2 description</string>
+    <string name="film_3_desc" translatable="false">Film 3 description</string>
+    <string name="film_4_desc" translatable="false">Film 4 description</string>
     <string name="details">details</string>
     <string name="share_with_friends">Share with friends</string>
+    <string name="favourites">favourites</string>
+    <string name="delete">delete</string>
 </resources>
