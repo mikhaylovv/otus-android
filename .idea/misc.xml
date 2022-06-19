@@ -6,6 +6,7 @@
         <entry key="../../../../layout/custom_preview.xml" value="0.23148148148148148" />
         <entry key="app/src/main/res/drawable/empty_head.xml" value="0.137" />
         <entry key="app/src/main/res/drawable/heart.xml" value="0.123" />
+        <entry key="app/src/main/res/drawable/heart_favorites.xml" value="0.125" />
         <entry key="app/src/main/res/layout/activity_details.xml" value="0.189209726443769" />
         <entry key="app/src/main/res/layout/activity_favorites.xml" value="0.17502532928064843" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.21822916666666667" />

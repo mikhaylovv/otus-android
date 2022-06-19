@@ -1,16 +1,20 @@
 package com.otus.vmikhaylov
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.graphics.drawable.GradientDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.get
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,17 +25,17 @@ class MainActivity : AppCompatActivity() {
     private val recyclerView by lazy { findViewById<RecyclerView>(R.id.recycler) }
 
     var films = mutableListOf<Film>()
-    var favorites = mutableListOf<Film>()
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         films = mutableListOf(
-            Film(R.drawable.film_1, getString(R.string.film_1_name), getString(R.string.film_1_desc), false),
-            Film(R.drawable.film_2, getString(R.string.film_2_name), getString(R.string.film_2_desc), false),
-            Film(R.drawable.film_3, getString(R.string.film_3_name), getString(R.string.film_3_desc), false),
-            Film(R.drawable.film_4, getString(R.string.film_4_name), getString(R.string.film_4_desc), false),
+            Film(R.drawable.film_1, getString(R.string.film_1_name), getString(R.string.film_1_desc), false, false),
+            Film(R.drawable.film_2, getString(R.string.film_2_name), getString(R.string.film_2_desc), false, false),
+            Film(R.drawable.film_3, getString(R.string.film_3_name), getString(R.string.film_3_desc), false, false),
+            Film(R.drawable.film_4, getString(R.string.film_4_name), getString(R.string.film_4_desc), false, false),
         )
 
         findViewById<Button>(R.id.share_with_friend).setOnClickListener{
@@ -51,13 +55,18 @@ class MainActivity : AppCompatActivity() {
         ) { result ->
             val data = result.data
             if (result.resultCode == RESULT_OK && data != null) {
-                favorites = data.getParcelableArrayListExtra("films") ?: favorites
+                films = data.getParcelableArrayListExtra("films") ?: films
+            }
+            (recyclerView.adapter as FilmsAdapter?)?.apply {
+                setFilms(films)
+                Log.i("films after",films.toString())
+                notifyDataSetChanged()
             }
         }
 
         findViewById<Button>(R.id.favorites).setOnClickListener {
             val intent = Intent(this@MainActivity, FavoritesActivity::class.java)
-            intent.putExtra("films", ArrayList(favorites))
+            intent.putExtra("films", ArrayList(films))
             startFavoritesActivity.launch(intent)
         }
 
@@ -94,10 +103,12 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFavoriteClick(film: Film, position: Int) {
-                if (!favorites.contains(film)){
-                    favorites.add(film)
+                films.find { f -> film.title == f.title  }?.apply {
+                    favorite = true
                 }
-                Toast.makeText(this@MainActivity, "Favorite Click", Toast.LENGTH_SHORT).show()
+                (recyclerView.findViewHolderForAdapterPosition(position) as? FilmViewHolder)?.apply {
+                    setFavorite(true)
+                }
             }
         })
 

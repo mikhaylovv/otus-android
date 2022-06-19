@@ -13,6 +13,7 @@ class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val image: ImageView = itemView.findViewById(R.id.image)
     private val detailsBtn: Button = itemView.findViewById(R.id.details)
     private val favorite: ImageButton = itemView.findViewById(R.id.favorite)
+    private val favoriteMarker: ImageView = itemView.findViewById(R.id.favorite_marker)
 
     fun bind(film: Film, listener: FilmsAdapter.FilmClickListener) {
         image.setImageResource(film.image)
@@ -32,5 +33,15 @@ class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         if (film.selected) {
             title.setTextColor(Color.parseColor("#FFBB86FC"))
         }
+        setFavorite(film.favorite)
+
+        favoriteMarker.setOnClickListener {
+            it.visibility = View.GONE
+            film.favorite = false
+        }
+    }
+
+    fun setFavorite(v: Boolean) {
+        favoriteMarker.visibility = if (v) View.VISIBLE  else View.GONE
     }
 }

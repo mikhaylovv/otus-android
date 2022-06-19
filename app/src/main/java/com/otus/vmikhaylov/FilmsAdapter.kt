@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 private const val TAG = "FilmsAdapter"
 
 class FilmsAdapter(
-    private val items: List<Film>,
+    private var items: List<Film>,
     private val listener: FilmClickListener
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -34,6 +34,10 @@ class FilmsAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return 0
+    }
+
+    fun setFilms(films: MutableList<Film>) {
+        items = films
     }
 
     interface FilmClickListener {
