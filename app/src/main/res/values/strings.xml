@@ -11,6 +11,11 @@
     <string name="film_4_desc" translatable="false">Film 4 description</string>
     <string name="details">details</string>
     <string name="share_with_friends">Share with friends</string>
+    <string name="title_activity_main_with_bottom_navigation">MainActivityWithBottomNavigation
+    </string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
     <string name="favourites">favourites</string>
     <string name="delete">delete</string>
 </resources>
